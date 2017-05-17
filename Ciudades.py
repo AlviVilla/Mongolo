@@ -1,5 +1,8 @@
 import json
 
+import Connection
+
+
 class Ciudad():
 
     def __init__(self):
@@ -113,14 +116,29 @@ class PuntoInteres():
 class MyCiudad(object):
     def __init__(self, **kwars):
         self.__dict__.update(self, kwars)
+'''
+def analIce(inputString):
+'''
+conexion = Connection.Conection()
+cliente = conexion.conected()
 
-lista = []
-with open('jason.json', 'r') as file:
-    for l in file:
-        lista = json.loads(l)
+
+wikicity= []
+with open('wikicity.json', 'r') as file:
+    wikicity = Ciudad()
+    for count, l in file:
+        ciudades = json.loads(l)
+        wikicity[count] = Ciudad()
+
+    for  l in wikicity:
+        for i in ciudades:
+            if(i=="province"):
+                l.provincia(i)
+
     file.close()
-print lista
+    print wikicity[0].provincia()
 
 
-        #c = MyCiudad(**{'nombre': 'Barajas', 'provincia': 'madrid'})
+
+    #c = MyCiudad(**{'nombre': 'Barajas', 'provincia': 'madrid'})
 
