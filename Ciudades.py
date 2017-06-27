@@ -13,7 +13,7 @@ class Ciudad():
         self._superficie = None
         self._altitud=None
         self._poblacion=None
-        self.PuntosInteres=[]
+        self.PuntoInteres=[]
 
 
     @property
@@ -72,6 +72,7 @@ class Ciudad():
         self._poblacion = poblacion
 
 
+
 class PuntoInteres():
     def __init__(self):
         self._nombre=None
@@ -109,34 +110,97 @@ class PuntoInteres():
     def geolocalizacion(self, geolocalizacion):
         self._geolocalizacion = geolocalizacion
 
-
-
-
-
+'''
 class MyCiudad(object):
     def __init__(self, **kwars):
         self.__dict__.update(self, kwars)
-'''
+
 def analIce(inputString):
 '''
+
+
+def save(cliente, inputCity):
+
+    print (inputCity)
+    for key, value in inputCity.items():
+        if key=="name":
+            try:
+                print("try..")
+                cliente.wikicity.aggregate([{'$match': {'name': value}}]).next()
+                print("tryed nicerony")
+            except:
+                cliente.wikicity.insert(inputCity)
+    '''
+            for name in ids:
+                if name == value:
+                    print ("se siente ya esta")
+                    return
+            ids.append(value)
+    cliente.wikicity.insert(inputCity)
+    '''
+
+
+'''
+        if(key=="province"):
+            diccionario.update({"province": value})
+        if(key=="name"):
+            diccionario.update({"name": value})
+        if (key == "autonomous_community"):
+            diccionario.update({"autonomous_community": value})
+        if (key == "location"):
+            diccionario.update({"location": value})
+        if (key == "elevation"):
+            diccionario.update({"elevation": value})
+        if (key == "area"):
+            diccionario.update({"area": value})
+        if (key =="location"):
+            for k, v in value.items():
+                if(k=="coordinates"):
+                    diccionario.update({"location": v})
+        if (key=="POI"):
+            diccionario.update({"POI": value})
+            for punto in value:
+                print("hola amigsidjflaksdf")
+                for k, v in punto.items():
+                    print (k, v)
+                print("\n")
+            print("--------------------------------------------------------------------")
+    cliente.wikicity.update({"location": id}, diccionario, True)
+'''
+
 conexion = Connection.Conection()
 cliente = conexion.conected()
+ids = []
+count = 1
 
 
-wikicity= []
+def consulta(inputString, cliente):
+    pass
+
 with open('wikicity.json', 'r') as file:
-    wikicity = Ciudad()
-    for count, l in file:
+    for l in file:
         ciudades = json.loads(l)
-        wikicity[count] = Ciudad()
+        #cliente.createCollection("wikicity", ciudades)
+        for n in ciudades:
+            save(cliente, n)
+            '''try:
+                cliente.wikicity.update({"name": },)
 
-    for  l in wikicity:
-        for i in ciudades:
-            if(i=="province"):
-                l.provincia(i)
+            ide= cliente.wikicity.insert(n)
 
-    file.close()
-    print wikicity[0].provincia()
+            print (ide)
+            '''
+    '''  for l in :
+        print ('hola')
+
+        save(cliente, l, count)
+        count += 1
+        elID = cliente.insert_one(l).inserted_id
+        print(type(elID))
+    '''
+file.close()
+
+    #print (wikicity[0].provincia())
 
 
 
