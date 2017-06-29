@@ -1,5 +1,5 @@
 import json
-
+import Consultas
 import Connection
 
 
@@ -156,7 +156,10 @@ ids = []
 count = 1
 
 
-def consulta(inputString, cliente):
+def consulta(consulta, cliente):
+    consultorio = Consultas.Consultas(cliente)
+    if(consulta==1):
+        return consultorio.c1("Castilla y Leon")
     pass
 
 with open('wikicity.json', 'r') as file:
@@ -167,11 +170,7 @@ with open('wikicity.json', 'r') as file:
             insert(cliente, n)
 
     file.close()
-nuevoPOI = PuntoInteres("poii","poii","poii","poii")
-nuevaCiudad = Ciudad("Astun", "Astun", "Astun", "Astun", "Astun", "Astun", "Astun", nuevoPOI)
-print("hola")
-save(cliente, nuevaCiudad)
-
+consulta(1, cliente)
 
 
 
@@ -183,6 +182,12 @@ save(cliente, nuevaCiudad)
 
 
 '''
+
+nuevoPOI = PuntoInteres("poii","poii","poii","poii")
+nuevaCiudad = Ciudad("Astun", "Astun", "Astun", "Astun", "Astun", "Astun", "Astun", nuevoPOI)
+print("hola")
+save(cliente, nuevaCiudad)
+
             try:
                 cliente.wikicity.update({"name": },)
 
