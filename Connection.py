@@ -3,5 +3,5 @@ class Conection(object):
     client = None
     @staticmethod
     def conected():
-        Conection.client= MongoClient()
-        return Conection.client.BaseTesting
+        Conection.client = MongoClient()
+        return Conection.client.WikiCity
