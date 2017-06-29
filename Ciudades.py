@@ -5,15 +5,15 @@ import Connection
 
 class Ciudad():
 
-    def __init__(self):
-        self._nombre= None
-        self._provincia=None
-        self._comunidadAutonoma = None
-        self._geolocalizacion=None
-        self._superficie = None
-        self._altitud=None
-        self._poblacion=None
-        self.PuntoInteres=[]
+    def __init__(self, nombre, provincia, comunidadAutonoma,geolocalizacion, superficie, altitud, poblacion, POI):
+        self._nombre= nombre
+        self._provincia=provincia
+        self._comunidadAutonoma = comunidadAutonoma
+        self._geolocalizacion=geolocalizacion
+        self._superficie = superficie
+        self._altitud=altitud
+        self._poblacion=poblacion
+        self.PuntoInteres=POI
 
 
     @property
@@ -74,16 +74,17 @@ class Ciudad():
 
 
 class PuntoInteres():
-    def __init__(self):
-        self._nombre=None
-        self._tipo=None
-        self._direccion=None
-        self._geolocalizacion = None
+
+    def __init__(self, nombre, tipo, direccion, geolocalizacion):
+        self._nombre=nombre
+        self._tipo=tipo
+        self._direccion=direccion
+        self._geolocalizacion = geolocalizacion
     @property
     def nombre(self):
         return self._nombre
     @nombre.setter
-    def nombre(self, nombre):
+    def snombre(self, nombre):
         self._nombre= nombre
 
     @property
@@ -91,7 +92,7 @@ class PuntoInteres():
         return self._tipo
 
     @tipo.setter
-    def tipo(self, tipo):
+    def stipo(self, tipo):
         self._tipo = tipo
 
     @property
@@ -99,7 +100,7 @@ class PuntoInteres():
         return self._direccion
 
     @direccion.setter
-    def direccion(self, direccion):
+    def sdireccion(self, direccion):
         self._direccion = direccion
 
     @property
@@ -107,7 +108,7 @@ class PuntoInteres():
         return self._geolocalizacion
 
     @geolocalizacion.setter
-    def geolocalizacion(self, geolocalizacion):
+    def sgeolocalizacion(self, geolocalizacion):
         self._geolocalizacion = geolocalizacion
 
 '''
@@ -118,8 +119,25 @@ class MyCiudad(object):
 def analIce(inputString):
 '''
 
+def save(cliente, ciudad):
 
-def save(cliente, inputCity):
+    diccionario={}
+    try:
+        cliente.wikicity.aggregate([{'$match': {'name': ciudad.nombre}}]).next()
+        print("exise")
+    except:
+        diccionario.update({"province": ciudad.provincia})
+        print(ciudad.provincia)
+        diccionario.update({"name": ciudad.nombre})
+        diccionario.update({"autonomous_community": ciudad.comunidadAutonoma})
+        diccionario.update({"location": ciudad.geolocalizacion})
+        diccionario.update({"elevation": ciudad.altitud})
+        diccionario.update({"area": ciudad.superficie})
+        diccionario.update({"POI": ciudad.PuntoInteres})
+        cliente.wikicity.insert(diccionario)
+
+
+def insert(cliente, inputCity):
 
     print (inputCity)
     for key, value in inputCity.items():
@@ -130,14 +148,72 @@ def save(cliente, inputCity):
                 print("tryed nicerony")
             except:
                 cliente.wikicity.insert(inputCity)
-    '''
+
+
+conexion = Connection.Conection()
+cliente = conexion.conected()
+ids = []
+count = 1
+
+
+def consulta(inputString, cliente):
+    pass
+
+with open('wikicity.json', 'r') as file:
+    for l in file:
+        ciudades = json.loads(l)
+        #cliente.createCollection("wikicity", ciudades)
+        for n in ciudades:
+            insert(cliente, n)
+
+    file.close()
+nuevoPOI = PuntoInteres("poii","poii","poii","poii")
+nuevaCiudad = Ciudad("Astun", "Astun", "Astun", "Astun", "Astun", "Astun", "Astun", nuevoPOI)
+print("hola")
+save(cliente, nuevaCiudad)
+
+
+
+
+
+
+
+
+
+
+
+'''
+            try:
+                cliente.wikicity.update({"name": },)
+
+            ide= cliente.wikicity.insert(n)
+
+            print (ide)
+'''
+'''  for l in :
+        print ('hola')
+
+        save(cliente, l, count)
+        count += 1
+        elID = cliente.insert_one(l).inserted_id
+        print(type(elID))
+'''
+
+
+    #print (wikicity[0].provincia())
+
+
+
+    #c = MyCiudad(**{'nombre': 'Barajas', 'provincia': 'madrid'})
+
+'''
             for name in ids:
                 if name == value:
                     print ("se siente ya esta")
                     return
             ids.append(value)
     cliente.wikicity.insert(inputCity)
-    '''
+'''
 
 
 '''
@@ -167,42 +243,3 @@ def save(cliente, inputCity):
             print("--------------------------------------------------------------------")
     cliente.wikicity.update({"location": id}, diccionario, True)
 '''
-
-conexion = Connection.Conection()
-cliente = conexion.conected()
-ids = []
-count = 1
-
-
-def consulta(inputString, cliente):
-    pass
-
-with open('wikicity.json', 'r') as file:
-    for l in file:
-        ciudades = json.loads(l)
-        #cliente.createCollection("wikicity", ciudades)
-        for n in ciudades:
-            save(cliente, n)
-            '''try:
-                cliente.wikicity.update({"name": },)
-
-            ide= cliente.wikicity.insert(n)
-
-            print (ide)
-            '''
-    '''  for l in :
-        print ('hola')
-
-        save(cliente, l, count)
-        count += 1
-        elID = cliente.insert_one(l).inserted_id
-        print(type(elID))
-    '''
-file.close()
-
-    #print (wikicity[0].provincia())
-
-
-
-    #c = MyCiudad(**{'nombre': 'Barajas', 'provincia': 'madrid'})
-
